@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if start_page == True %}
+    <title>Virtual library</title>
+    {% elif select_all == True %}
+    <title>Books</title>
+    {% elif book_detail == True %}
+    <title>Book details</title>
+    {% elif adding == True %}
+    <title>Add a book</title>
+    {% elif deleting == True %}
+    <title>Deleting a book</title>
+    {% endif %}
+    <style> td, th { border: 1px solid black; } </style>
+</head>
+<body>
+{% if start_page == True %}
+<h1>Welcome in virtual library</h1>
+<ul>
+    <li>For all books type click <a href="/books"><button>Books</button></a></li>
+    <li>For select one book by id type: <b>/book_detail/id</b> in URL where id is a number of book.</li>
+    <li>To add a new book to library click <a href="/add_book"><button>Add book</button></a></li>
+    <li>To delete a book from library type <b>/delete_book/id</b> in URL where id is a number of book</li>
+</ul>
+{% elif select_all == True %}
+<table>
+    <thead>
+        <tr>
+            <th>id</th><th>author_id</th><th>ISBN</th><th>Name</th><th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in list_of_books %}
+        <tr>
+            <td>{{book[0]}}</td><td>{{book[1]}}</td><td>{{book[2]}}</td><td>{{book[3]}}</td><td>{{book[4]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif book_detail == True %}
+<table>
+    <thead>
+        <tr>
+            <th>id</th><th>author_id</th><th>ISBN</th><th>Name</th><th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{book_det[0][0]}}</td><td>{{book_det[0][1]}}</td><td>{{book_det[0][2]}}</td><td>{{book_det[0][3]}}</td><td>{{book_det[0][4]}}</td>
+        </tr>
+    </tbody>
+</table>
+{% elif adding == True %}
+<h1>Adding a book</h1>
+<form class="book_form" method="post" action="#">
+    <label>Author_id (check below)</label><br>
+    <input name="author" type="text" maxlength="255"/><br>
+    <label>ISBN</label><br>
+    <input name="isbn" type="text" maxlength="255"/><br>
+    <label>Name</label><br>
+    <input name="name" type="text" maxlength="255"/><br>
+    <label>Description</label><br>
+    <input name="description" type="text" maxlength="255"/><br>
+    <button type="submit" name="submit" value="movie">Add</button>
+</form>
+<br>
+<p>List of authors</p>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>id</th><th>Author</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for author in authors %}
+        <tr>
+            <td>{{author[0]}}</td><td>{{author[1]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif deleting == True %}
+<h1>The book of id {{id}} was succesfully deleted</h1><br>
+<table>
+    <thead>
+        <tr>
+            <th>id</th><th>author_id</th><th>ISBN</th><th>Name</th><th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{deleted_book_details[0][0]}}</td><td>{{deleted_book_details[0][1]}}</td><td>{{deleted_book_details[0][2]}}</td><td>{{deleted_book_details[0][3]}}</td><td>{{deleted_book_details[0][4]}}</td>
+        </tr>
+    </tbody>
+</table>
+{% endif %}
+</body>
+</html>
